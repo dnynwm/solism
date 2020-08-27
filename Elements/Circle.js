@@ -10,7 +10,7 @@
 class Circle {
     constructor() {
       noStroke();
-    
+
       this.r = random(150, 255);
       this.g = random(150, 255);
       this.b = random(150, 255);
@@ -40,6 +40,8 @@ class Circle {
 
     updateSize() {
       this.size = this.size + random(2)-0.6;
+      //console.log(this.maxSize)
+
       if(this.size > this.maxSize) {this.startFading = true};
       //filter(BLUR, 3);
        // this.blurValue += 3;
@@ -62,8 +64,6 @@ class Circle {
 
       if(this.x < 0) this.x = width
       if(this.y < 0) this.y = height
-
-      console.log("Movement x: " + this.x);
     }
 
     updateColor() {
