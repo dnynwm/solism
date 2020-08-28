@@ -21,7 +21,7 @@ let monoSynthDeep, monoSynthMid, monoSynthHigh, monoSynthBass, mrNoisy, env, saw
 let notePatternDeep = [48, 50, 52, 50, 53, 55, 57, 59];
 let notePatternMid = [60, 62, 64, 65, 67, 69, 71]
 let notePatternHigh = [72, 74, 76, 77, 79, 81, 83];
-let notePatternBass = [26, 28, 29, 31];
+let notePatternBass = [28, 29, 31];
 //let notePatternSaw = [72, 74, 76, 77, 79, 81, 83];
 
 //---------- VISUALS --------
@@ -58,7 +58,7 @@ function setup() {
   partOne.addPhrase(trackBassPhrase);
   // partOne.addPhrase(trackNoisePhrase);
   // partOne.addPhrase(trackSawPhrase);
-  partOne.setBPM(80);
+  partOne.setBPM(120);
   partOne.loop();
 
   //--VOICE 1--
