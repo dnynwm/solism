@@ -1,22 +1,22 @@
 //---------- AUDIO ----------------------------
 let partOne;
 let trackOnePattern = [1, 0, 0, 0, 1, 0, 0, 0];
-let trackOneIteration = 0;
 let trackTwoPattern = [0, 0, 1, 0, 0, 0, 0, 0];
-let trackTwoIteration = 0;
-let trackThreePattern = [0, 0, 0, 0, 0, 0, 1, 0, 0];
-let trackThreeIteration = 0;
+let trackThreePattern = [0, 1, 0, 1, 0, 0, 1, 0, 1];
 let trackNoisePattern = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-let trackNoiseIteration = 0;
-let env;
 
-//--VOICES----------------
-let monoSynthDeep, monoSynthMid, monoSynthHigh, mrNoisy;
+//--VOICES AND ENVELOPES----------------
+let monoSynthDeep, monoSynthMid, monoSynthHigh, mrNoisy, env;
 
-//--NOTE PATTERN--------------
-let notePatternDeep = [45, 47, 48, 50, 52, 53, 56];
-let notePatternMid = [57, 59, 60, 62, 64, 65, 68]
-let notePatternHigh = [69, 71, 72, 74, 76, 77, 80];
+//--NOTE PATTERN-----Harmonic Minor---------
+// let notePatternDeep = [45, 47, 48, 50, 52, 53, 56];
+// let notePatternMid = [57, 59, 60, 62, 64, 65, 68]
+// let notePatternHigh = [69, 71, 72, 74, 76, 77, 80];
+
+//--NOTE PATTERN-----C Major----------------
+let notePatternDeep = [48, 50, 52, 50, 53, 55, 57, 59];
+let notePatternMid = [60, 62, 64, 65, 67, 69, 71]
+let notePatternHigh = [72, 74, 76, 77, 79, 81, 83];
 
 //---------- VISUALS --------
 const circles = [];
@@ -32,6 +32,9 @@ function setup() {
 
   cnv.mousePressed(playMyPart);
 
+  // let randomPattern = random(trackThreePattern);
+  // console.log(trackThreePattern);
+
   //--PRASES------------
   let trackOnePhrase = new p5.Phrase('trackOne', trackOne, trackOnePattern);
   let trackTwoPhrase = new p5.Phrase('trackTwo', trackTwo, trackTwoPattern);
@@ -43,7 +46,7 @@ function setup() {
   partOne.addPhrase(trackOnePhrase);
   partOne.addPhrase(trackTwoPhrase);
   partOne.addPhrase(trackThreePhrase);
-  //partOne.addPhrase(trackNoisePhrase);
+  // partOne.addPhrase(trackNoisePhrase);
   partOne.setBPM(30);
   partOne.loop();
 
@@ -54,8 +57,11 @@ function setup() {
   monoSynthMid = new p5.MonoSynth();
   monoSynthMid.amp(0.9);
   //--VOICE 3--
+
   monoSynthHigh = new p5.MonoSynth();
-  monoSynthHigh.amp(0.9);
+  monoSynthHigh.amp(0.3);
+
+
 
   //--NOISE AMP ENVELOPE--
   env = new p5.Envelope();
@@ -75,9 +81,9 @@ function setup() {
 
   //--DELAY processing--
   delay = new p5.Delay();
-  delay.process(monoSynthDeep, 0.75, 0.3, 3000);
-  delay.process(monoSynthMid, 0.75, 0.3, 3000);
-  delay.process(monoSynthHigh, 0.75, 0.3, 3000);
+  delay.process(monoSynthDeep, 0.33, 0.3, 3000);
+  delay.process(monoSynthMid, 0.66, 0.3, 3000);
+  delay.process(monoSynthHigh, 0.99, 0.3, 4000);
   delay.amp(0.9);
 
   //--REVERB processing--
@@ -110,16 +116,16 @@ function trackOne(time) {
   let note = midiToFreq(randomNote);
 
   monoSynthDeep.play(note, 0.5, time);
-  monoSynthDeep.setADSR(2, 3, 1, 2);
+  monoSynthDeep.setADSR(1, 3, 1, 2);
 }
 
 // TRACK 2----------------------------
 function trackTwo(time) {
   let randomNote = random(notePatternMid);
   let note = midiToFreq(randomNote);
-  
+
   monoSynthMid.play(note, 0.5, time);
-  monoSynthMid.setADSR(2, 3, 1, 2);
+  monoSynthMid.setADSR(1, 3, 1, 2);
 }
 
 // TRACK 3----------------------------
@@ -128,7 +134,7 @@ function trackThree(time) {
   let note = midiToFreq(randomNote);
 
   monoSynthHigh.play(note, 0.5, time);
-  monoSynthHigh.setADSR(2, 3, 1, 2);
+  monoSynthHigh.setADSR(0.7, 3, 1, 1);
 }
 
 // TRACK 4----------------------------
