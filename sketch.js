@@ -1,6 +1,5 @@
 
 //---------- AUDIO ----------------------------
-let masterVol;
 let partOne;
 let trackOnePattern = [1, 0, 0, 0, 1, 0, 0, 0];
 let trackTwoPattern = [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0];
@@ -27,15 +26,18 @@ let notePatternBass = [28, 29, 31];
 //---------- VISUALS --------
 const circles = [];
 
+//-----------SLIDER----------
+let setVolume;
 //--SETUP--------------------
 
 function setup() {
-  masterVol = masterVolume(0.9);
+  masterVolume(0.9);
   //--CANVAS------------
-  let cnv = createCanvas(1200, 1000);
+  let cnv = createCanvas(windowWidth, windowHeight);
   background(0);
   textAlign(CENTER, CENTER);
-  text('tap to play', width / 2, height / 2);
+  //text('tap to play', width / 2, height / 2);
+  
 
   cnv.mousePressed(playMyPart);
 
@@ -97,13 +99,22 @@ function setup() {
   
 
 
-    //--SLIDER VOLUME--
-    setVolume = createSlider(-60, 0, -60, 0); //-60dB max
-    setVolume.position(130, 10);
-    // input event listenter with anonymus fuction
-    setVolume.input(function() {
-      monoSynthDeep.amp(pow(10, setVolume.value()/20), 0.01)
-    })
+    //--SLIDER MASTER VOLUME--
+    function masterVol() {
+      setVolume = createSlider(-60, 0, -10, 0); //-60dB max
+      setVolume.position(130, 10);
+      setVolume.size(200);
+      //slider.style("transform", "rotate(90deg)");
+      
+      //setVolume.setColorForeground(color(0, 125, 0));
+      //setVolume.rotate(-90);
+      // input event listenter with anonymus fuction
+      setVolume.input(function() {
+        window.masterVolume(pow(10, setVolume.value()/20), 0.01);
+      });
+    }
+    masterVol();
+   
 
 
   //--DELAY processing--
@@ -140,6 +151,8 @@ function draw() {
     c.update()
     c.redraw()
   })
+  text("Master", setVolume.x * 2 + setVolume.width, 20);
+  
 }
 
 // TRACK 1----------------------------
