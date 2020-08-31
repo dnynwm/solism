@@ -5,8 +5,9 @@ let trackOnePattern = [1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 
 let trackTwoPattern = [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0];
 let trackThreePattern = [0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1];
 let trackNoisePattern = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+let trackBassPattern = [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 //let trackSawPattern = [0, 1, 0, 1, 0, 0, 1, 0, 1];
-let trackBassPattern = [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
 
 //--VOICES AND ENVELOPES----------------
 let monoSynthDeep, monoSynthMid, monoSynthHigh, monoSynthBass, mrNoisy, env, saw;
@@ -15,12 +16,13 @@ let monoSynthDeep, monoSynthMid, monoSynthHigh, monoSynthBass, mrNoisy, env, saw
 // let notePatternDeep = [45, 47, 48, 50, 52, 53, 56];
 // let notePatternMid = [57, 59, 60, 62, 64, 65, 68]
 // let notePatternHigh = [69, 71, 72, 74, 76, 77, 80];
+// let notePatternBass = [33, 35, 42];
 
 //--NOTE PATTERN-----C Major----------------
 let notePatternDeep = [48, 50, 52, 50, 53, 55, 57, 59];
 let notePatternMid = [60, 62, 64, 65, 67, 69, 71]
 let notePatternHigh = [72, 74, 76, 77, 79, 81, 83];
-let notePatternBass = [28, 29, 31, 32];
+let notePatternBass = [31, 33, 36];
 //let notePatternSaw = [72, 74, 76, 77, 79, 81, 83];
 
 //---------- VISUALS --------
@@ -51,30 +53,21 @@ function setup() {
   let trackNoisePhrase = new p5.Phrase('trackNoise', trackNoise, trackNoisePattern);
   //let trackSawPhrase = new p5.Phrase('trackSaw', trackSaw, trackSawPattern);
   let trackBassPhrase = new p5.Phrase('trackBass', trackBass, trackBassPattern);
-  // 
+  //
   //--PARTS------------
   partOne = new p5.Part(8, 1 / 4);
   partOne.addPhrase(trackOnePhrase);
   partOne.addPhrase(trackTwoPhrase);
   partOne.addPhrase(trackThreePhrase);
-  partOne.addPhrase(trackBassPhrase);
+  //partOne.addPhrase(trackBassPhrase);
   //partOne.addPhrase(trackNoisePhrase);
   // partOne.addPhrase(trackSawPhrase);
   partOne.setBPM(120);
-  partOne.loop();
+  //partOne.loop();
 
   //--VOICE 1--
   monoSynthDeep = new p5.MonoSynth();
   monoSynthDeep.amp(0.9);
-
-  synthVolumeDeep = createSlider(-60, 0, -10, 0); //-60dB max
-  synthVolumeDeep.position(130, 40);
-  synthVolumeDeep.size(200);
-  synthVolumeDeep.input(function () {
-    monoSynthDeep.amp(pow(10, synthVolumeDeep.value() / 20), 0.01);
-  });
-
-
 
   //--VOICE 2--
   monoSynthMid = new p5.MonoSynth();
@@ -112,11 +105,12 @@ function setup() {
   //saw.amp(env);
 
 
+//-----UI ELEMENTS------------------------
 
-  //--SLIDER MASTER VOLUME--
+  //--MASTER VOLUME--
   function masterVol() {
     setVolume = createSlider(-60, 0, -10, 0); //-60dB max
-    setVolume.position(130, 10);
+    setVolume.position(130, 20);
     setVolume.size(200);
     setVolume.input(function () {
       window.masterVolume(pow(10, setVolume.value() / 20), 0.01);
@@ -124,7 +118,38 @@ function setup() {
   }
   masterVol();
 
+//-- VOICE 1 VOLUME--
+  function synthDeepSlider() {
+    synthVolumeDeep = createSlider(-60, 0, -10, 0); //-60dB max
+    synthVolumeDeep.position(130, 60);
+    synthVolumeDeep.size(200);
+    synthVolumeDeep.input(function () {
+    monoSynthDeep.amp(pow(10, synthVolumeDeep.value() / 20), 0.01);
+    });
+  }
+  synthDeepSlider();
 
+//-- VOICE 2 VOLUME--
+  function synthMidSlider() {
+    synthVolumeMid = createSlider(-60, 0, -10, 0); //-60dB max
+    synthVolumeMid.position(130, 100);
+    synthVolumeMid.size(200);
+    synthVolumeMid.input(function () {
+    monoSynthMid.amp(pow(10, synthVolumeMid.value() / 20), 0.01);
+    });
+  }
+  synthMidSlider();
+
+//-- VOICE 3 VOLUME--
+function synthHighSlider() {
+  synthVolumeHigh = createSlider(-60, 0, -10, 0); //-60dB max
+  synthVolumeHigh.position(130, 140);
+  synthVolumeHigh.size(200);
+  synthVolumeHigh.input(function () {
+  monoSynthHigh.amp(pow(10, synthVolumeHigh.value() / 20), 0.01);
+  });
+}
+synthHighSlider();
 
 
   //--DELAY processing--
@@ -144,7 +169,7 @@ function setup() {
   reverb.amp(0.9);
 
   //Compressing the REVERB
-  //comp.process(reverb);
+  comp.process(reverb);
 
   //Stops Visuals
   noLoop();
@@ -161,10 +186,15 @@ function draw() {
 
 
   //--------LABELS------------
-  text("Master", 100, 20);
-  text("Voice 1", 100, 40);
+  text("All", 100, 20);
+  text("Voice 1", 100, 60);
+  text("Voice 2", 100, 100);
+  text("Voice 3", 100, 140);
+
 
 }
+
+
 
 // TRACK 1----------------------------
 function trackOne(time) {
@@ -225,7 +255,7 @@ function trackBass(time) {
   //console.log(attack);
   //monoSynthHigh.pan(-1, 4);
   monoSynthBass.play(note, velocity, time);
-  monoSynthBass.setADSR(0.001, 8, 0, 0);
+  monoSynthBass.setADSR(0.01, 8, 0, 0);
 }
 
 // TRACK 5----------------------------
@@ -249,6 +279,7 @@ function playMyPart() {
     noLoop();
   } else {
     partOne.start();
+    partOne.loop();
     loop();
     //mrNoisy.start();
   }
