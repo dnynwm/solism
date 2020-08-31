@@ -3,7 +3,7 @@
 let partOne;
 let trackOnePattern = [1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1];
 let trackTwoPattern = [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0];
-let trackThreePattern = [0, 1, 0, 0, 1, 0, 0, 0 ,0, 0, 0, 0, 0, 0, 1, 1];
+let trackThreePattern = [0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1];
 let trackNoisePattern = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 //let trackSawPattern = [0, 1, 0, 1, 0, 0, 1, 0, 1];
 let trackBassPattern = [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -20,7 +20,7 @@ let monoSynthDeep, monoSynthMid, monoSynthHigh, monoSynthBass, mrNoisy, env, saw
 let notePatternDeep = [48, 50, 52, 50, 53, 55, 57, 59];
 let notePatternMid = [60, 62, 64, 65, 67, 69, 71]
 let notePatternHigh = [72, 74, 76, 77, 79, 81, 83];
-let notePatternBass = [28, 29, 31];
+let notePatternBass = [28, 29, 31, 32];
 //let notePatternSaw = [72, 74, 76, 77, 79, 81, 83];
 
 //---------- VISUALS --------
@@ -37,9 +37,9 @@ function setup() {
   background(0);
   textAlign(CENTER, CENTER);
   //text('tap to play', width / 2, height / 2);
-  
 
   cnv.mousePressed(playMyPart);
+  //<script src="p5.dom.min.js"></script>
 
   // let randomPattern = random(trackThreePattern);
   // console.log(trackThreePattern);
@@ -53,7 +53,7 @@ function setup() {
   let trackBassPhrase = new p5.Phrase('trackBass', trackBass, trackBassPattern);
   // 
   //--PARTS------------
-  partOne = new p5.Part(8, 1/4);
+  partOne = new p5.Part(8, 1 / 4);
   partOne.addPhrase(trackOnePhrase);
   partOne.addPhrase(trackTwoPhrase);
   partOne.addPhrase(trackThreePhrase);
@@ -68,13 +68,13 @@ function setup() {
   monoSynthDeep.amp(0.9);
 
   synthVolumeDeep = createSlider(-60, 0, -10, 0); //-60dB max
-      synthVolumeDeep.position(130, 40);
-      synthVolumeDeep.size(200);
-      synthVolumeDeep.input(function() {
-        monoSynthDeep.amp(pow(10, synthVolumeDeep.value()/20), 0.01);
-      });
+  synthVolumeDeep.position(130, 40);
+  synthVolumeDeep.size(200);
+  synthVolumeDeep.input(function () {
+    monoSynthDeep.amp(pow(10, synthVolumeDeep.value() / 20), 0.01);
+  });
 
-  
+
 
   //--VOICE 2--
   monoSynthMid = new p5.MonoSynth();
@@ -84,9 +84,9 @@ function setup() {
   monoSynthHigh = new p5.MonoSynth();
   monoSynthHigh.amp(0.6);
 
-   //--VOICE Bass--
-   monoSynthBass = new p5.MonoSynth();
-   monoSynthBass.amp(0.6);
+  //--VOICE Bass--
+  monoSynthBass = new p5.MonoSynth();
+  monoSynthBass.amp(0.6);
 
   //PANNER
 
@@ -106,33 +106,33 @@ function setup() {
 
 
 
-   //--VOICE 4--
-   //saw = new p5.Oscillator('sawtooth');
-   //saw.scale(0.2, 0.2, 0.2, 0.2);
-   //saw.amp(env);
+  //--VOICE 4--
+  //saw = new p5.Oscillator('sawtooth');
+  //saw.scale(0.2, 0.2, 0.2, 0.2);
+  //saw.amp(env);
 
 
 
-    //--SLIDER MASTER VOLUME--
-    function masterVol() {
-      setVolume = createSlider(-60, 0, -10, 0); //-60dB max
-      setVolume.position(130, 10);
-      setVolume.size(200);
-      setVolume.input(function() {
-        window.masterVolume(pow(10, setVolume.value()/20), 0.01);
-      });
-    }
-    masterVol();
+  //--SLIDER MASTER VOLUME--
+  function masterVol() {
+    setVolume = createSlider(-60, 0, -10, 0); //-60dB max
+    setVolume.position(130, 10);
+    setVolume.size(200);
+    setVolume.input(function () {
+      window.masterVolume(pow(10, setVolume.value() / 20), 0.01);
+    });
+  }
+  masterVol();
 
 
 
 
   //--DELAY processing--
   delay = new p5.Delay();
-  //delay.setType("pingPong");
-  delay.process(monoSynthDeep, 1/4, 0.5, 2200);
-  delay.process(monoSynthMid, 1/8, 0.5, 3000);
-  delay.process(monoSynthHigh, 1/4, 0.6, 3000);
+  delay.setType("pingPong");
+  delay.process(monoSynthDeep, 1 / 4, 0.5, 2200);
+  delay.process(monoSynthMid, 1 / 8, 0.5, 3000);
+  delay.process(monoSynthHigh, 1 / 4, 0.6, 3000);
   delay.amp(0.9);
 
   //--REVERB processing--
@@ -148,18 +148,17 @@ function setup() {
 
   //Stops Visuals
   noLoop();
-
-
 }
 //---------- CIRCLES --------
 function draw() {
-  //clear();
-  background(0);
-  
-  circles.forEach(c => {
-    c.update()
-    c.redraw()
-  })
+    clear();
+    background(0);
+
+    circles.forEach(c => {
+      c.update()
+      c.redraw()
+    })
+
 
   //--------LABELS------------
   text("Master", 100, 20);
@@ -246,7 +245,7 @@ function playMyPart() {
 
   if (partOne.isPlaying) {
     partOne.stop();
-    mrNoisy.stop();
+    //mrNoisy.stop();
     noLoop();
   } else {
     partOne.start();

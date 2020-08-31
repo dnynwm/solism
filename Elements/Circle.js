@@ -46,7 +46,7 @@ class Circle {
       if(this.size > this.maxSize) {this.startFading = true};
       //
        // this.blurValue += 3;
-      console.log("Size: "+this.size);
+      //console.log("Size: "+this.size);
     }
 
     updateFade() {
