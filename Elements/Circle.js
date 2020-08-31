@@ -10,6 +10,7 @@
 class Circle {
     constructor() {
       noStroke();
+      smooth();
 
       this.r = random(150, 255);
       this.g = random(150, 255);
@@ -17,8 +18,8 @@ class Circle {
       this.alph = random(200, 255);
 
 
-      this.x = random(0, width);
-      this.y = random(0, height);
+      this.x = random(width/2);
+      this.y = random(height/2);
 
       this.xInc = random(0, 2)-1;
       this.yInc = random(0, 2)-1;
@@ -39,18 +40,19 @@ class Circle {
     }
 
     updateSize() {
-      this.size = this.size + random(2)-0.6;
+      this.size = this.size + (random(2)-1)/2;
       //console.log(this.maxSize)
 
       if(this.size > this.maxSize) {this.startFading = true};
-      //filter(BLUR, 3);
+      //
        // this.blurValue += 3;
-      //console.log("Size: "+this.size);
+      console.log("Size: "+this.size);
     }
 
     updateFade() {
       if(this.startFading) {
         this.alph -= this.fadeValue
+        //filter(BLUR, 6)
       }
       //console.log("Size: "+this.size);
     }

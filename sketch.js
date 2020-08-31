@@ -1,7 +1,7 @@
 
 //---------- AUDIO ----------------------------
 let partOne;
-let trackOnePattern = [1, 0, 0, 0, 1, 0, 0, 0];
+let trackOnePattern = [1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1];
 let trackTwoPattern = [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0];
 let trackThreePattern = [0, 1, 0, 0, 1, 0, 0, 0 ,0, 0, 0, 0, 0, 0, 1, 1];
 let trackNoisePattern = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -58,7 +58,7 @@ function setup() {
   partOne.addPhrase(trackTwoPhrase);
   partOne.addPhrase(trackThreePhrase);
   partOne.addPhrase(trackBassPhrase);
-  // partOne.addPhrase(trackNoisePhrase);
+  //partOne.addPhrase(trackNoisePhrase);
   // partOne.addPhrase(trackSawPhrase);
   partOne.setBPM(120);
   partOne.loop();
@@ -66,11 +66,20 @@ function setup() {
   //--VOICE 1--
   monoSynthDeep = new p5.MonoSynth();
   monoSynthDeep.amp(0.9);
+
+  synthVolumeDeep = createSlider(-60, 0, -10, 0); //-60dB max
+      synthVolumeDeep.position(130, 40);
+      synthVolumeDeep.size(200);
+      synthVolumeDeep.input(function() {
+        monoSynthDeep.amp(pow(10, synthVolumeDeep.value()/20), 0.01);
+      });
+
   
+
   //--VOICE 2--
   monoSynthMid = new p5.MonoSynth();
   monoSynthMid.amp(0.9);
-  
+
   //--VOICE 3--
   monoSynthHigh = new p5.MonoSynth();
   monoSynthHigh.amp(0.6);
@@ -84,19 +93,24 @@ function setup() {
   //--NOISE AMP ENVELOPE--
   env = new p5.Envelope();
 
+  //lfo = new Tone.LFO("32n",0.5, 10);
+
   //--COMPRESSOR--
   comp = new p5.Compressor();
 
   //--MR NOISY--
   mrNoisy = new p5.Noise("pink");
   mrNoisy.amp(env);
-  
+
+
+
+
 
    //--VOICE 4--
    //saw = new p5.Oscillator('sawtooth');
    //saw.scale(0.2, 0.2, 0.2, 0.2);
    //saw.amp(env);
-  
+
 
 
     //--SLIDER MASTER VOLUME--
@@ -104,25 +118,21 @@ function setup() {
       setVolume = createSlider(-60, 0, -10, 0); //-60dB max
       setVolume.position(130, 10);
       setVolume.size(200);
-      //slider.style("transform", "rotate(90deg)");
-      
-      //setVolume.setColorForeground(color(0, 125, 0));
-      //setVolume.rotate(-90);
-      // input event listenter with anonymus fuction
       setVolume.input(function() {
         window.masterVolume(pow(10, setVolume.value()/20), 0.01);
       });
     }
     masterVol();
-   
+
+
 
 
   //--DELAY processing--
   delay = new p5.Delay();
-  delay.setType("pingPong");
-  delay.process(monoSynthDeep, 1/8, 0.5, 500);
+  //delay.setType("pingPong");
+  delay.process(monoSynthDeep, 1/4, 0.5, 2200);
   delay.process(monoSynthMid, 1/8, 0.5, 3000);
-  delay.process(monoSynthHigh, 2/3, 0.4, 3000);
+  delay.process(monoSynthHigh, 1/4, 0.6, 3000);
   delay.amp(0.9);
 
   //--REVERB processing--
@@ -143,16 +153,18 @@ function setup() {
 }
 //---------- CIRCLES --------
 function draw() {
-  clear();
+  //clear();
   background(0);
-
-  if(circles.length <100)circles.push(new Circle());
+  
   circles.forEach(c => {
     c.update()
     c.redraw()
   })
-  text("Master", setVolume.x * 2 + setVolume.width, 20);
-  
+
+  //--------LABELS------------
+  text("Master", 100, 20);
+  text("Voice 1", 100, 40);
+
 }
 
 // TRACK 1----------------------------
@@ -160,9 +172,10 @@ function trackOne(time) {
   let randomNote = random(notePatternDeep);
   let note = midiToFreq(randomNote);
   let velocity = random(0.5, 0.9);
+  circles.push(new Circle());
 
   monoSynthDeep.play(note, velocity, time);
-  monoSynthDeep.setADSR(1, 3, 1, 2);
+  monoSynthDeep.setADSR(0.01, 2, 1, 1);
 }
 
 // TRACK 2----------------------------
@@ -170,9 +183,10 @@ function trackTwo(time) {
   let randomNote = random(notePatternMid);
   let note = midiToFreq(randomNote);
   let velocity = random(0.5, 0.9);
+  circles.push(new Circle());
 
   monoSynthMid.play(note, velocity, time);
-  monoSynthMid.setADSR(1, 3, 1, 2);
+  monoSynthMid.setADSR(1, 2, 1, 2);
 }
 
 // TRACK 3----------------------------
@@ -180,22 +194,26 @@ function trackThree(time) {
   let randomNote = random(notePatternHigh);
   let note = midiToFreq(randomNote);
   let velocity = random(0.1, 0.9);
+  circles.push(new Circle());
+
   //let attack = random(0.01, 0.09);
   let decay = random(1, 3);
   //console.log(attack);
   //monoSynthHigh.pan(-1, 4);
   monoSynthHigh.setADSR(1, decay, 1, 1);
   monoSynthHigh.play(note, velocity, time);
- 
 }
 
 // TRACK 4----------------------------
 function trackNoise() {
   //env.set(4, 0.1, 1, 0.1, 2, 0.1);
+  circles.push(new Circle());
+
   mrNoisy.start();
   env.setADSR(4, 0.7, 0.7, 4);
   //env.setExp();
   env.play();
+
 }
 
 // TRACK Bass----------------------------
