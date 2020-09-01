@@ -101,7 +101,7 @@ function setup() {
   //--VOICE 3 DELAY ----
   voice3Delay = new p5.Delay();
   voice3Delay.setType("pingPong");
-  voice3Delay.process(monoSynthHigh, 3 / 4, 0.6, 3000);
+  voice3Delay.process(monoSynthHigh, 7 / 8, 0.5, 3000);
   voice3Delay.amp(0.9);
   //--VOICE 3 REVERB ----
   voice3reverb = new p5.Reverb();
@@ -261,10 +261,10 @@ function trackThree(time) {
   circles.push(new Circle());
 
   //let attack = random(0.01, 0.09);
-  let decay = random(1, 3);
+  //let decay = random(1, 3);
   //console.log(attack);
   //monoSynthHigh.pan(-1, 4);
-  monoSynthHigh.setADSR(1, decay, 1, 1);
+  monoSynthHigh.setADSR(0.1, 0.1, 0, 1);
   monoSynthHigh.play(note, velocity, time);
 }
 
