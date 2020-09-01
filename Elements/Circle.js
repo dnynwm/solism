@@ -41,7 +41,8 @@ class Circle {
 
     updateSize() {
       this.size = this.size + (random(2)-1)/2;
-      //console.log(this.maxSize)
+      //console.log(this.size)
+      
 
       if(this.size > this.maxSize) {this.startFading = true};
       //
@@ -52,7 +53,7 @@ class Circle {
     updateFade() {
       if(this.startFading) {
         this.alph -= this.fadeValue
-        //filter(BLUR, 6)
+        
       }
       //console.log("Size: "+this.size);
     }
