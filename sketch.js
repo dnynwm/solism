@@ -1,5 +1,7 @@
 
-//-----RANDOM CIRCLES-------
+//-----BACKGROUND----------
+let spaceCount = 1;
+const max = 100;
 
 //-------------------------
 
@@ -45,15 +47,17 @@ let setVolume;
 function setup() {
   masterVolume(0.9);
 
-  //--CANVAS------------
+  //--CANVAS-----------------
   let cnv = createCanvas(windowWidth, windowHeight);
+  noStroke();
+  
 
   textAlign(CENTER, CENTER);
   // PLAY / PAUSE
   cnv.mousePressed(playMyPart);
 
 
-  //--PRASES------------
+  //--PRASES-----------------
   let trackOnePhrase = new p5.Phrase('trackOne', trackOne, trackOnePattern);
   let trackTwoPhrase = new p5.Phrase('trackTwo', trackTwo, trackTwoPattern);
   let trackThreePhrase = new p5.Phrase('trackThree', trackThree, trackThreePattern);
@@ -61,7 +65,7 @@ function setup() {
   //let trackSawPhrase = new p5.Phrase('trackSaw', trackSaw, trackSawPattern);
   let trackBassPhrase = new p5.Phrase('trackBass', trackBass, trackBassPattern);
   //
-  //--PARTS------------
+  //--PARTS-------------------
   partOne = new p5.Part(8, 1 / 4);
   partOne.addPhrase(trackOnePhrase);
   partOne.addPhrase(trackTwoPhrase);
@@ -76,11 +80,13 @@ function setup() {
   //--------------------------------
   monoSynthDeep = new p5.MonoSynth();
   monoSynthDeep.amp(0.9);
+
   //--VOICE 1 --- DELAY ----
   voice1Delay = new p5.Delay();
   voice1Delay.setType("pingPong");
   voice1Delay.process(monoSynthDeep, 3 / 4, 0.7, 5000);
   voice1Delay.amp(0.9);
+
 
 
 
@@ -138,22 +144,13 @@ function setup() {
   //-- NOISE ENVELOPE------------
   env = new p5.Envelope();
   mrNoisy.amp(env);
+  mrNoisy.pan(0);
+  //--NOISE REVERB ----
+  noiseReverb = new p5.Reverb();
+  noiseReverb.process(mrNoisy, 9, 8, false);
+  console.log(frameCount);
+  noiseReverb.amp(0.9);
   //console.log(mrNoisy.amp);
-
-
-  //--DELAY processing--
-  delay = new p5.Delay();
-  delay.setType("pingPong");
-  delay.process(monoSynthMid, 3 / 4, 0.5, 3000);
-  delay.process(monoSynthHigh, 3 / 4, 0.6, 3000);
-  delay.amp(0.9);
-
-  //--REVERB processing--
-  //reverb = new p5.Reverb();
-  //reverb.process(monoSynthMid, 9, 8, false);
-  // reverb.process(monoSynthHigh, 9, 8, false);
-  // reverb.process(noiseGain, 9, 8, false);
-  //reverb.amp(0.9);
 
 
   //--VOICE 4--
@@ -214,21 +211,27 @@ function setup() {
 }
 //---------- CIRCLES --------
 
-function flowBackground() {
-  background(0);
-}
+
 
 function draw() {
   clear();
-  flowBackground();
+  background(0);
+  //--------BACKGROUND----------
 
-breathe();
+
+  //--------BREATHING-----------
+  breathe();
   //--------CIRCLES-------------
   circles.forEach(c => {
     c.update()
     c.redraw()
   })
 
+  // if (spaceCount < max) {
+  //   fill(random(255), random(255), random(255), random(255));
+  //   ellipse(random(windowWidth), random(windowHeight), random(1, 10));
+  //   spaceCount++
+  // }
 
   // //--------LABELS------------
   // text("All", 100, 20);

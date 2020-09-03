@@ -1,19 +1,30 @@
 //---------BREATHE-------------
 
-var diam = 10;
-var change = 1.1;
+
+let diam = 0;
+let change = 0.5;
+let alph = 170;
 
 function breathe() {
-    var col;
-    col = color(255, 255, 255, 170);
+    let col;
+    col = color(255, 255, 255, alph);
     fill(col);
 
     // diameter change
     diam += change;
-    if (diam > width/6) {
-      change = -change;
+   
+    if (diam > width / 7) {
+        change = -change;
     } else if (diam < 0) {
-      change = -change;
+        change = -change;
     }
-    ellipse(windowWidth/2, windowHeight/2, diam, diam);
+
+    if (diam > width / 2) {
+        alph -= 1;
+    } else if (diam < 1) {
+        alph += 1;
+    }
+
+    circle(windowWidth / 2, windowHeight / 2, diam);
 }
+

@@ -7,6 +7,10 @@
 
 // ]
 
+
+//-----BACKGROUND-------
+
+
 class Circle {
   constructor() {
     noStroke();
@@ -24,14 +28,11 @@ class Circle {
     this.xInc = random(0, 2) - 1;
     this.yInc = random(0, 2) - 1;
 
-    this.size = 25;
+    this.size = 2;
     this.maxSize = 75;
 
     this.startFading = false
     this.fadeValue = 1
-    this.blurValue = 0
-
-    // this.backgroundValue = 0
   }
 
   update() {
@@ -39,9 +40,9 @@ class Circle {
     this.updateMovement()
     this.updateColor()
     this.updateFade()
-    // this.updateBg()
-
   }
+
+
 
   // updateBg() {
   //   background(this.backgroundValue = 100);
