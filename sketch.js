@@ -1,4 +1,9 @@
 
+//-----RANDOM CIRCLES-------
+
+//-------------------------
+
+
 //---------- AUDIO ----------------------------
 let partOne;
 let trackOnePattern = [1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1];
@@ -42,7 +47,7 @@ function setup() {
 
   //--CANVAS------------
   let cnv = createCanvas(windowWidth, windowHeight);
-  background(0);
+
   textAlign(CENTER, CENTER);
   // PLAY / PAUSE
   cnv.mousePressed(playMyPart);
@@ -61,7 +66,7 @@ function setup() {
   partOne.addPhrase(trackOnePhrase);
   partOne.addPhrase(trackTwoPhrase);
   partOne.addPhrase(trackThreePhrase);
-  // partOne.addPhrase(trackBassPhrase);
+  partOne.addPhrase(trackBassPhrase);
   partOne.addPhrase(trackNoisePhrase);
   // partOne.addPhrase(trackSawPhrase);
   partOne.setBPM(120);
@@ -133,6 +138,7 @@ function setup() {
   //-- NOISE ENVELOPE------------
   env = new p5.Envelope();
   mrNoisy.amp(env);
+  //console.log(mrNoisy.amp);
 
 
   //--DELAY processing--
@@ -156,74 +162,79 @@ function setup() {
   //saw.amp(env);
 
 
-  //-----UI ELEMENTS------------------------
+  // //-----UI ELEMENTS------------------------
+  // //-------SLIDER------------------------
+  // //--MASTER VOLUME--
+  // function masterVol() {
+  //   setVolume = createSlider(-60, 0, -10, 0); //-60dB max
+  //   setVolume.position(130, 20);
+  //   setVolume.size(200);
+  //   setVolume.input(function () {
+  //     window.masterVolume(pow(10, setVolume.value() / 20), 0.01);
+  //   });
+  // }
+  // masterVol();
 
-  //--MASTER VOLUME--
-  function masterVol() {
-    setVolume = createSlider(-60, 0, -10, 0); //-60dB max
-    setVolume.position(130, 20);
-    setVolume.size(200);
-    setVolume.input(function () {
-      window.masterVolume(pow(10, setVolume.value() / 20), 0.01);
-    });
-  }
-  masterVol();
+  // //-- VOICE 1 VOLUME--
+  // function synthDeepSlider() {
+  //   synthVolumeDeep = createSlider(-60, 0, -10, 0); //-60dB max
+  //   synthVolumeDeep.position(130, 60);
+  //   synthVolumeDeep.size(200);
+  //   synthVolumeDeep.input(function () {
+  //     monoSynthDeep.amp(pow(10, synthVolumeDeep.value() / 20), 0.01);
+  //   });
+  // }
+  // synthDeepSlider();
 
-  //-- VOICE 1 VOLUME--
-  function synthDeepSlider() {
-    synthVolumeDeep = createSlider(-60, 0, -10, 0); //-60dB max
-    synthVolumeDeep.position(130, 60);
-    synthVolumeDeep.size(200);
-    synthVolumeDeep.input(function () {
-      monoSynthDeep.amp(pow(10, synthVolumeDeep.value() / 20), 0.01);
-    });
-  }
-  synthDeepSlider();
+  // //-- VOICE 2 VOLUME--
+  // function synthMidSlider() {
+  //   synthVolumeMid = createSlider(-60, 0, -10, 0); //-60dB max
+  //   synthVolumeMid.position(130, 100);
+  //   synthVolumeMid.size(200);
+  //   synthVolumeMid.input(function () {
+  //     monoSynthMid.amp(pow(10, synthVolumeMid.value() / 20), 0.01);
+  //   });
+  // }
+  // synthMidSlider();
 
-  //-- VOICE 2 VOLUME--
-  function synthMidSlider() {
-    synthVolumeMid = createSlider(-60, 0, -10, 0); //-60dB max
-    synthVolumeMid.position(130, 100);
-    synthVolumeMid.size(200);
-    synthVolumeMid.input(function () {
-      monoSynthMid.amp(pow(10, synthVolumeMid.value() / 20), 0.01);
-    });
-  }
-  synthMidSlider();
-
-  //-- VOICE 3 VOLUME--
-  function synthHighSlider() {
-    synthVolumeHigh = createSlider(-60, 0, -10, 0); //-60dB max
-    synthVolumeHigh.position(130, 140);
-    synthVolumeHigh.size(200);
-    synthVolumeHigh.input(function () {
-      monoSynthHigh.amp(pow(10, synthVolumeHigh.value() / 20), 0.01);
-    });
-  }
-  synthHighSlider();
+  // //-- VOICE 3 VOLUME--
+  // function synthHighSlider() {
+  //   synthVolumeHigh = createSlider(-60, 0, -10, 0); //-60dB max
+  //   synthVolumeHigh.position(130, 140);
+  //   synthVolumeHigh.size(200);
+  //   synthVolumeHigh.input(function () {
+  //     monoSynthHigh.amp(pow(10, synthVolumeHigh.value() / 20), 0.01);
+  //   });
+  // }
+  // synthHighSlider();
 
 
   //Stops Visuals
   noLoop();
 }
 //---------- CIRCLES --------
+
+function flowBackground() {
+  background(0);
+}
+
 function draw() {
   clear();
-  background(0);
+  flowBackground();
 
+breathe();
+  //--------CIRCLES-------------
   circles.forEach(c => {
     c.update()
     c.redraw()
   })
 
 
-  //--------LABELS------------
-  text("All", 100, 20);
-  text("Voice 1", 100, 60);
-  text("Voice 2", 100, 100);
-  text("Voice 3", 100, 140);
-
-
+  // //--------LABELS------------
+  // text("All", 100, 20);
+  // text("Voice 1", 100, 60);
+  // text("Voice 2", 100, 100);
+  // text("Voice 3", 100, 140);
 }
 
 
