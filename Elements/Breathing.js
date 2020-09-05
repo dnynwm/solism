@@ -3,7 +3,7 @@
 
 let diam = 0;
 let change = 0.5;
-let alph = 170;
+let alph = 90;
 
 function breathe() {
     let col;

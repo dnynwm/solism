@@ -1,18 +1,19 @@
-
 //-----BACKGROUND----------
 let spaceCount = 1;
 const max = 100;
 
 //-------------------------
 
-
 //---------- AUDIO ----------------------------
-let partOne;
-let trackOnePattern = [1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1];
+let scoreOne;
+let partOne, partTwo;
+let trackOnePattern = [1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1];
 let trackTwoPattern = [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0];
 let trackThreePattern = [0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1];
-let trackNoisePattern = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+let trackNoisePattern = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
 let trackBassPattern = [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+
 //let trackSawPattern = [0, 1, 0, 1, 0, 0, 1, 0, 1];
 
 
@@ -50,11 +51,15 @@ function setup() {
   //--CANVAS-----------------
   let cnv = createCanvas(windowWidth, windowHeight);
   noStroke();
-  
+
+  button = createButton('Start/Pause');
+  button.position(19, 19);
+  button.mousePressed(playScore);
 
   textAlign(CENTER, CENTER);
   // PLAY / PAUSE
-  cnv.mousePressed(playMyPart);
+  //cnv.mousePressed(playMyPart);
+  //cnv.mousePressed(playMyScore);
 
 
   //--PRASES-----------------
@@ -65,16 +70,32 @@ function setup() {
   //let trackSawPhrase = new p5.Phrase('trackSaw', trackSaw, trackSawPattern);
   let trackBassPhrase = new p5.Phrase('trackBass', trackBass, trackBassPattern);
   //
+
   //--PARTS-------------------
-  partOne = new p5.Part(8, 1 / 4);
-  partOne.addPhrase(trackOnePhrase);
-  partOne.addPhrase(trackTwoPhrase);
-  partOne.addPhrase(trackThreePhrase);
-  partOne.addPhrase(trackBassPhrase);
+  partOne = new p5.Part(32, 1 / 8);
+
+  // partOne.addPhrase(trackTwoPhrase);
+  // partOne.addPhrase(trackThreePhrase);
+  // partOne.addPhrase(trackBassPhrase);
   partOne.addPhrase(trackNoisePhrase);
   // partOne.addPhrase(trackSawPhrase);
-  partOne.setBPM(120);
-  //partOne.loop();
+  partOne.setBPM(60);
+
+
+  partTwo = new p5.Part(32, 1 / 8);
+
+  // partTwo.addPhrase(trackOnePhrase);
+  // partTwo.addPhrase(trackTwoPhrase);
+  partTwo.addPhrase(trackThreePhrase);
+  // partTwo.addPhrase(trackBassPhrase);
+  // partTwo.addPhrase(trackNoisePhrase);
+  partTwo.setBPM(60);
+
+  //--SCORE-------------------------
+  scoreOne = new p5.Score(partOne, partTwo);
+  scoreOne.setBPM(60);
+
+  //scoreOne.loop();
 
   //--VOICE 1-----------------------
   //--------------------------------
@@ -110,14 +131,14 @@ function setup() {
   monoSynthHigh = new p5.MonoSynth();
   monoSynthHigh.amp(0.6);
   //--VOICE 3 DELAY ----
-  voice3Delay = new p5.Delay();
-  voice3Delay.setType("pingPong");
-  voice3Delay.process(monoSynthHigh, 7 / 8, 0.5, 3000);
-  voice3Delay.amp(0.9);
-  //--VOICE 3 REVERB ----
-  voice3reverb = new p5.Reverb();
-  voice3reverb.process(monoSynthHigh, 9, 8, false);
-  voice3reverb.amp(0.9);
+  // voice3Delay = new p5.Delay();
+  // voice3Delay.setType("pingPong");
+  // voice3Delay.process(monoSynthHigh, 7 / 8, 0.5, 3000);
+  // voice3Delay.amp(0.9);
+  // //--VOICE 3 REVERB ----
+  // voice3reverb = new p5.Reverb();
+  // voice3reverb.process(monoSynthHigh, 9, 8, false);
+  // voice3reverb.amp(0.9);
 
   //--VOICE Bass-----------------------
   monoSynthBass = new p5.MonoSynth();
@@ -148,7 +169,7 @@ function setup() {
   //--NOISE REVERB ----
   noiseReverb = new p5.Reverb();
   noiseReverb.process(mrNoisy, 9, 8, false);
-  console.log(frameCount);
+  //console.log(frameCount);
   noiseReverb.amp(0.9);
   //console.log(mrNoisy.amp);
 
@@ -313,19 +334,32 @@ function trackBass(time) {
 //   // saw.setADSR(0.7, 3, 1, 1);
 // }
 
-// PLAY PARTS----------------------------
-function playMyPart() {
+//PLAY PARTS----------------------------
+// function playMyPart() {
+//   if (partOne.isPlaying) {
+//     partOne.stop();
+//     mrNoisy.stop();
+//     noLoop();
+//   } else {
+//     partOne.start();
+//     partOne.loop();
+//     loop();
+//     mrNoisy.start();
+//   }
+// }
+
+function playScore() {
   userStartAudio();
 
-  if (partOne.isPlaying) {
-    partOne.stop();
-    mrNoisy.stop();
+  if ((partOne.isPlaying) || (partTwo.isPlaying)) {
     noLoop();
+    scoreOne.stop();
+    mrNoisy.stop();
+
   } else {
-    partOne.start();
-    partOne.loop();
+    scoreOne.start();
+    scoreOne.loop();
     loop();
     mrNoisy.start();
   }
-
 }
