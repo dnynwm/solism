@@ -3,11 +3,11 @@
 
 let diam = 0;
 let change = 0.5;
-let alph = 90;
+let alph = 15;
 
 function breathe() {
     let col;
-    col = color(255, 255, 255, alph);
+    col = color(200, 200, 200, alph);
     fill(col);
 
     // diameter change
