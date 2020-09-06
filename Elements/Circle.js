@@ -28,7 +28,7 @@ class Circle {
     this.xInc = random(0, 2) - 1;
     this.yInc = random(0, 2) - 1;
 
-    this.size = 2;
+    this.size = 5;
     this.maxSize = 75;
 
     this.startFading = false
