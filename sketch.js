@@ -338,6 +338,11 @@ function setup() {
   noiseFilter.disconnect();//disconnect from noise filter
   noiseReverb.process(noiseFilter, 9, 8, false);
   noiseReverb.amp(0.5);
+    //--NOISE DELAY ----
+    noiseDelay = new p5.Delay();
+    noiseDelay.setType("pingPong");
+    noiseDelay.process(noiseReverb, 15 / 16, 0.6, 10000);
+    noiseDelay.amp(0.9);
 
   //Stops Visuals at loading page
   noLoop();
