@@ -2,7 +2,7 @@
 
 
 let diam = 0;
-let change = 0.5;
+let change = 0.7;
 let alph = 30;
 
 function breathe() {
@@ -13,7 +13,7 @@ function breathe() {
     // diameter change
     diam += change;
 
-    if (diam > width / 7) {
+    if (diam > width / 10) {
         change = -change;
     } else if (diam < 0) {
         change = -change;

@@ -11,10 +11,10 @@ Just klick play and enjoy as long as you like
 
 //---------- SCORE PATTERN TRACKS -----------------------------------
 let scoreOne;
-let partOne, partTwo, partThree, partFour, partFive, partSix, partSeven, partEight, partNine, partTen, partTest;
+let partOne, partTwo, partThree, partFour, partFive, partSix, partSeven, partEight, partNine, partTen, partEleven, partTwelve, partTest;
 
 let trackLowPatternA = [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
-let trackMidPatternA = [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0];
+let trackMidPatternA = [0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0];
 let trackHighPatternA = [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0];
 let trackHighDistPatternA = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 let trackBassPatternA = [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -243,8 +243,6 @@ function setup() {
   monoSynthHigh = new p5.MonoSynth();
   monoSynthHigh.amp(0.6);
   monoSynthHigh.setADSR(0.2, 1, 1, 1);
-  //let attack = random(0.01, 0.09);
-  //let decay = random(1, 3);
   //--VOICE 3 GAIN NODE-----------
   monoSynthHigh.disconnect();//disconnect from P5.sound
   voice3Gain = new p5.Gain();
@@ -274,8 +272,6 @@ function setup() {
   monoSynthDist = new p5.MonoSynth();
   monoSynthDist.amp(0.9);
   monoSynthDist.setADSR(2, 1, 5, 1);
-  //let attack = random(0.01, 0.09);
-  //let decay = random(1, 3);
   //--VOICE 3 GAIN NODE-----------
   monoSynthDist.disconnect();//disconnect from P5.sound
   voice4Gain = new p5.Gain();
@@ -287,15 +283,6 @@ function setup() {
   voice4Gain.disconnect();//disconnect from voice 4 gain node
   voice4Dist.process(voice4Gain);
   voice4Dist.amp(0.3);
-  //--VOICE 3 DELAY ----
-  // voice4Delay = new p5.Delay();
-  // voice4Delay.setType("pingPong");
-  // voice4Delay.process(voice4Gain, 6 / 9, 0.5, 10000);
-  // voice4Delay.amp(0.9);
-  // //--VOICE 3 REVERSE REVERB ----
-  // voice4revReverb = new p5.Reverb();
-  // voice4revReverb.process(voice4Gain, 5, 2, true);
-  // voice4revReverb.amp(0.9);
   // //--VOICE 3 REVERB ----
   voice4reverb = new p5.Reverb();
   voice4Dist.disconnect();
@@ -303,19 +290,14 @@ function setup() {
   voice4reverb.amp(0.9);
   let dryWet = 1;
   voice4reverb.drywet(dryWet);
-  //voice4reverb.drywet(50);
-  //--COMPRESSOR--
-  // comp = new p5.Compressor();
-  // comp.process(voice4reverb);
 
-
-  //--VOICE Bass-----------------------
+  //--VOICE BASS-----------------------
   monoSynthBass = new p5.MonoSynth();
   monoSynthBass.amp(0.7);
   monoSynthBass.setADSR(0.01, 4, 0, 0);
   //let attack = random(0.01, 0.09);
   //let decay = random(0.01, 0.09);
-  //--VOICE 3 GAIN NODE-----------
+  //--VOICE BASS GAIN NODE-----------
   monoSynthBass.disconnect();//disconnect from P5.sound
   voiceBassGain = new p5.Gain();
   voiceBassGain.connect();//connect to p5.sound
@@ -334,16 +316,6 @@ function setup() {
   vBassReverb = new p5.Reverb();
   vBassReverb.process(voiceBassGain, 3, 3, false);
   vBassReverb.amp(0.9);
-
-  //PANNER
-
-  //--NOISE AMP ENVELOPE--
-
-
-  //lfo = new Tone.LFO("32n",0.5, 10);
-
-  //--COMPRESSOR--
-  //comp = new p5.Compressor();
 
   //--NOISE----------------------
   mrNoisy = new p5.Noise("pink");
@@ -367,54 +339,6 @@ function setup() {
   noiseReverb.process(noiseFilter, 9, 8, false);
   noiseReverb.amp(0.5);
 
-
-
-  // //-----UI ELEMENTS------------------------
-  // //-------SLIDER------------------------
-  // //--MASTER VOLUME--
-  // function masterVol() {
-  //   setVolume = createSlider(-60, 0, -10, 0); //-60dB max
-  //   setVolume.position(130, 20);
-  //   setVolume.size(200);
-  //   setVolume.input(function () {
-  //     window.masterVolume(pow(10, setVolume.value() / 20), 0.01);
-  //   });
-  // }
-  // masterVol();
-
-  // //-- VOICE 1 VOLUME--
-  // function synthDeepSlider() {
-  //   synthVolumeDeep = createSlider(-60, 0, -10, 0); //-60dB max
-  //   synthVolumeDeep.position(130, 60);
-  //   synthVolumeDeep.size(200);
-  //   synthVolumeDeep.input(function () {
-  //     monoSynthDeep.amp(pow(10, synthVolumeDeep.value() / 20), 0.01);
-  //   });
-  // }
-  // synthDeepSlider();
-
-  // //-- VOICE 2 VOLUME--
-  // function synthMidSlider() {
-  //   synthVolumeMid = createSlider(-60, 0, -10, 0); //-60dB max
-  //   synthVolumeMid.position(130, 100);
-  //   synthVolumeMid.size(200);
-  //   synthVolumeMid.input(function () {
-  //     monoSynthMid.amp(pow(10, synthVolumeMid.value() / 20), 0.01);
-  //   });
-  // }
-  // synthMidSlider();
-
-  // //-- VOICE 3 VOLUME--
-  // function synthHighSlider() {
-  //   synthVolumeHigh = createSlider(-60, 0, -10, 0); //-60dB max
-  //   synthVolumeHigh.position(130, 140);
-  //   synthVolumeHigh.size(200);
-  //   synthVolumeHigh.input(function () {
-  //     monoSynthHigh.amp(pow(10, synthVolumeHigh.value() / 20), 0.01);
-  //   });
-  // }
-  // synthHighSlider();
-
   //Stops Visuals at loading page
   noLoop();
 }
@@ -429,17 +353,6 @@ function draw() {
     c.update()
     c.redraw()
   })
-  // if (spaceCount < max) {
-  //   fill(random(255), random(255), random(255), random(255));
-  //   ellipse(random(windowWidth), random(windowHeight), random(1, 10));
-  //   spaceCount++
-  // }
-
-  // //--------LABELS------------
-  // text("All", 100, 20);
-  // text("Voice 1", 100, 60);
-  // text("Voice 2", 100, 100);
-  // text("Voice 3", 100, 140);
 }
 
 
@@ -504,20 +417,6 @@ function trackBass(time) {
 }
 
 
-//PLAY PARTS----------------------------
-// function playMyPart() {
-//   if (partOne.isPlaying) {
-//     partOne.stop();
-//     mrNoisy.stop();
-//     noLoop();
-//   } else {
-//     partOne.start();
-//     partOne.loop();
-//     loop();
-//     mrNoisy.start();
-//   }
-// }
-
 function playScore() {
   userStartAudio();
   if ((partOne.isPlaying) ||
@@ -525,7 +424,12 @@ function playScore() {
       (partThree.isPlaying) ||
       (partFour.isPlaying) ||
       (partFive.isPlaying) ||
-      (partSix.isPlaying)
+      (partSix.isPlaying) ||
+      (partEight.isPlaying) ||
+      (partNine.isPlaying) ||
+      (partTen.isPlaying) ||
+      (partEleven.isPlaying) ||
+      (partTwelve.isPlaying)
       ) {
     noLoop();
     scoreOne.pause();
@@ -537,5 +441,5 @@ function playScore() {
     loop();
     mrNoisy.start();
   }
-} //( || (partTest.isPlaying)
+} //(partTest.isPlaying)
 
