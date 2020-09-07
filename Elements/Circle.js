@@ -28,8 +28,8 @@ class Circle {
     this.xInc = random(0, 2) - 1;
     this.yInc = random(0, 2) - 1;
 
-    this.size = 5;
-    this.maxSize = 75;
+    this.size = 10;
+    this.maxSize =60;
 
     this.startFading = false
     this.fadeValue = 1
@@ -41,12 +41,6 @@ class Circle {
     this.updateColor()
     this.updateFade()
   }
-
-
-
-  // updateBg() {
-  //   background(this.backgroundValue = 100);
-  // }
 
   updateSize() {
     this.size = this.size + (random(2) - 1) / 2;
@@ -75,7 +69,6 @@ class Circle {
     this.g = this.g + (random() * 2) - 1; // -0.5 & 1.5
     this.b = this.b + (random() * 2) - 1; // -0.5 & 1.5
     this.alph = this.alph + (random() * 2) - 1;
-
   }
 
   redraw() {

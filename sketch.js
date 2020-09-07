@@ -9,15 +9,15 @@ Just klick play and enjoy as long as you like
 */
 
 
-//---------- AUDIO ----------------------------
+//---------- SCORE PATTERN TRACKS -----------------------------------
 let scoreOne;
 let partOne, partTwo, partThree;
-let trackOnePattern = [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1];
-let trackTwoPattern = [0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0];
-let trackThreePattern = [0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1];
-let trackFourPattern = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+let trackLowPattern = [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1];
+let trackMidPattern = [0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0];
+let trackHighPattern = [0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1];
+let trackHighDistPattern = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 let trackNoisePattern = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-let trackBassPattern = [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0];
+let trackBassPattern = [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 
 
@@ -47,7 +47,7 @@ let notePatternDeep = [48, 50, 52, 50, 53, 55, 57];//[48, 52, 55, 59];
 let notePatternMid = [60, 62, 64, 65, 67, 69, 71]//[60, 64, 67, 71];
 let notePatternHigh = [72, 74, 76, 77, 79, 81, 83];//[72, 76, 79, 83];
 let notePatternDist = [72, 74, 76, 77, 79, 81, 83];
-let notePatternBass = [33, 36, 40, 43];
+let notePatternBass = [29, 33, 36, 40];
 
 
 //---------- VISUALS --------
@@ -72,10 +72,10 @@ function setup() {
   //textAlign(CENTER, CENTER);
 
   //--PRASES-----------------
-  let trackOnePhrase = new p5.Phrase('trackOne', trackOne, trackOnePattern);
-  let trackTwoPhrase = new p5.Phrase('trackTwo', trackTwo, trackTwoPattern);
-  let trackThreePhrase = new p5.Phrase('trackThree', trackThree, trackThreePattern);
-  let trackFourPhrase = new p5.Phrase('trackFour', trackFour, trackFourPattern);
+  let trackOnePhrase = new p5.Phrase('trackOne', trackOne, trackLowPattern);
+  let trackTwoPhrase = new p5.Phrase('trackTwo', trackTwo, trackMidPattern);
+  let trackThreePhrase = new p5.Phrase('trackThree', trackThree, trackHighPattern);
+  let trackFourPhrase = new p5.Phrase('trackFour', trackFour, trackHighDistPattern);
   let trackNoisePhrase = new p5.Phrase('trackNoise', trackNoise, trackNoisePattern);
   let trackBassPhrase = new p5.Phrase('trackBass', trackBass, trackBassPattern);
 
@@ -129,7 +129,7 @@ function setup() {
 
   //--SCORE-------------------------
   //--------------------------------
-  scoreOne = new p5.Score(partOne, partTwo, partThree, partFour, partFive, partSix); //partTest
+  scoreOne = new p5.Score(partSix); //partTest // partOne, partTwo, partThree, partFour, partFive,
   scoreOne.setBPM(60);
 
   //scoreOne.loop();
@@ -189,9 +189,9 @@ function setup() {
   //--VOICE 3-----------------------
   //--------------------------------
   monoSynthHigh = new p5.MonoSynth();
-  monoSynthHigh.amp(0.9);
-  monoSynthHigh.setADSR(0.1, 0.1, 0, 1);
-   //let attack = random(0.01, 0.09);
+  monoSynthHigh.amp(0.6);
+  monoSynthHigh.setADSR(0.2, 1, 1, 1);
+  //let attack = random(0.01, 0.09);
   //let decay = random(1, 3);
   //--VOICE 3 GAIN NODE-----------
   monoSynthHigh.disconnect();//disconnect from P5.sound
@@ -212,15 +212,15 @@ function setup() {
   voice3reverb = new p5.Reverb();
   voice3reverb.process(voice3Gain, 5, 10, false);
   voice3reverb.amp(0.9);
-  voice3reverb.drywet(100);
+  voice3reverb.drywet(0.9);
   //--COMPRESSOR--
   comp = new p5.Compressor();
   comp.process(voice3revReverb);
 
   //--VOICE 4 DIST-----------------------
   //--------------------------------
-  monoSynthDist = new p5.MonoSynth();
-  monoSynthDist.amp(0.4);
+  monoSynthDist = new p5.PolySynth();
+  //monoSynthDist.amp(0.6);
   monoSynthDist.setADSR(2, 1, 5, 1);
   //let attack = random(0.01, 0.09);
   //let decay = random(1, 3);
@@ -229,7 +229,7 @@ function setup() {
   voice4Gain = new p5.Gain();
   voice4Gain.connect();//connect to p5.sound
   voice4Gain.setInput(monoSynthDist);
-  voice4Gain.amp(0.7);
+  voice4Gain.amp(0.4);
   //--VOICE 4 --- DISTORTION ----
   voice4Dist = new p5.Distortion(0.10, '2x');
   voice4Gain.disconnect();//disconnect from voice 4 gain node
@@ -259,7 +259,7 @@ function setup() {
 
   //--VOICE Bass-----------------------
   monoSynthBass = new p5.MonoSynth();
-  monoSynthBass.amp(0.9);
+  monoSynthBass.amp(0.7);
   monoSynthBass.setADSR(0.01, 4, 0, 0);
   //let attack = random(0.01, 0.09);
   //let decay = random(0.01, 0.09);
@@ -270,7 +270,7 @@ function setup() {
   voiceBassGain.setInput(monoSynthBass);
   voiceBassGain.amp(0.7);
   //--VOICE BASS --- DISTORTION ----
-  vBassDist = new p5.Distortion(0.05, '2x');
+  vBassDist = new p5.Distortion(0.02, 'none');
   vBassDist.process(voiceBassGain);
   vBassDist.amp(0.3);
   //--VOICE BASS REVERB ----
@@ -370,9 +370,6 @@ function setup() {
 function draw() {
   clear();
   background(0);
-  //--------BACKGROUND----------
-
-
   //--------BREATHING-----------
   breathe();
   //--------CIRCLES-------------
@@ -380,7 +377,6 @@ function draw() {
     c.update()
     c.redraw()
   })
-
   // if (spaceCount < max) {
   //   fill(random(255), random(255), random(255), random(255));
   //   ellipse(random(windowWidth), random(windowHeight), random(1, 10));
@@ -430,12 +426,13 @@ function trackThree(time) {
 // TRACK 4----------------------------
 function trackFour(time) {
   let randomNote = random(notePatternDist);
-  let note = midiToFreq(randomNote);
+  let noteA = midiToFreq(randomNote);
+  //let noteC = midiToFreq(randomNote);
   //let velocity = random(0.1, 0.9);
   //---VISUALS-----
   circles.push(new Circle());
   //monoSynthHigh.pan(-1, 4);
-  monoSynthDist.play(note, 0.9, time);
+  monoSynthDist.play(noteA, 0.9, time);
 }
 
 // TRACK NOISE----------------------------
@@ -471,9 +468,10 @@ function trackBass(time) {
 
 function playScore() {
   userStartAudio();
-  if ((partOne.isPlaying) || (partTwo.isPlaying) || (partThree.isPlaying) || (partTest.isPlaying)) {
+  if ((partOne.isPlaying) || (partTwo.isPlaying) || (partThree.isPlaying) || (partFour.isPlaying) || (partFive.isPlaying) || (partSix.isPlaying)) {
     noLoop();
-    scoreOne.stop();
+    scoreOne.pause();
+    //scoreOne.stop();
     mrNoisy.stop();
   } else {
     scoreOne.start();
@@ -481,4 +479,5 @@ function playScore() {
     loop();
     mrNoisy.start();
   }
-}
+} //( || (partTest.isPlaying)
+

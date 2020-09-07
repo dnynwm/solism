@@ -3,7 +3,7 @@
 
 let diam = 0;
 let change = 0.5;
-let alph = 15;
+let alph = 30;
 
 function breathe() {
     let col;
@@ -12,7 +12,7 @@ function breathe() {
 
     // diameter change
     diam += change;
-   
+
     if (diam > width / 7) {
         change = -change;
     } else if (diam < 0) {
