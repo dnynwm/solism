@@ -181,7 +181,7 @@ function setup() {
 
   //--SCORE-------------------------
   //--------------------------------
-  scoreOne = new p5.Score(partOne, partTwo, partThree, partFour, partFive, partSix, partSeven, partEight, partNine, partTen, partEleven, partTwelve); //partTest // partOne, partTwo, partThree, partFour, partFive, partSix, partSeven, partEight, partNine, partTen
+  scoreOne = new p5.Score(partOne, partTwo, partThree, partFour, partFive, partSix, partSeven, partEight, partNine, partTen, partEleven, partTwelve);
   scoreOne.setBPM(60);
 
   //scoreOne.loop();

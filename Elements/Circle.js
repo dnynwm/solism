@@ -29,7 +29,7 @@ class Circle {
     this.yInc = random(0, 2) - 1;
 
     this.size = 10;
-    this.maxSize =60;
+    this.maxSize = 50;
 
     this.startFading = false
     this.fadeValue = 1
@@ -43,7 +43,7 @@ class Circle {
   }
 
   updateSize() {
-    this.size = this.size + (random(2) - 1) / 2;
+    this.size = this.size + (random(2) - 1) / 2; //this.size = this.size + 0.02;
     if (this.size > this.maxSize) { this.startFading = true };
   }
 
