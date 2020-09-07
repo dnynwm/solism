@@ -11,15 +11,21 @@ Just klick play and enjoy as long as you like
 
 //---------- SCORE PATTERN TRACKS -----------------------------------
 let scoreOne;
-let partOne, partTwo, partThree;
-let trackLowPattern = [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1];
-let trackMidPattern = [0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0];
-let trackHighPattern = [0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1];
-let trackHighDistPattern = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+let partOne, partTwo, partThree, partFour, partFive, partSix, partSeven, partEight, partNine, partTen, partTest;
+
+let trackLowPatternA = [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
+let trackMidPatternA = [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0];
+let trackHighPatternA = [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0];
+let trackHighDistPatternA = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+let trackBassPatternA = [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
 let trackNoisePattern = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-let trackBassPattern = [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-
+let trackLowPatternB = [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1];
+let trackMidPatternB = [0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0];
+let trackHighPatternB = [0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1];
+let trackHighDistPatternB = [1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0];
+let trackBassPatternB = [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 
 
@@ -72,12 +78,14 @@ function setup() {
   //textAlign(CENTER, CENTER);
 
   //--PRASES-----------------
-  let trackOnePhrase = new p5.Phrase('trackOne', trackOne, trackLowPattern);
-  let trackTwoPhrase = new p5.Phrase('trackTwo', trackTwo, trackMidPattern);
-  let trackThreePhrase = new p5.Phrase('trackThree', trackThree, trackHighPattern);
-  let trackFourPhrase = new p5.Phrase('trackFour', trackFour, trackHighDistPattern);
+  let trackOnePhrase = new p5.Phrase('trackOne', trackOne, trackLowPatternA);
+  let trackTwoPhrase = new p5.Phrase('trackTwo', trackTwo, trackMidPatternA);
+  let trackThreePhraseA = new p5.Phrase('trackThree', trackThree, trackHighPatternA);
+  let trackThreePhraseB = new p5.Phrase('trackThree', trackThree, trackHighPatternB);
+  let trackFourPhraseA = new p5.Phrase('trackFour', trackFour, trackHighDistPatternA);
+  let trackFourPhraseB = new p5.Phrase('trackFour', trackFour, trackHighDistPatternB);
   let trackNoisePhrase = new p5.Phrase('trackNoise', trackNoise, trackNoisePattern);
-  let trackBassPhrase = new p5.Phrase('trackBass', trackBass, trackBassPattern);
+  let trackBassPhrase = new p5.Phrase('trackBass', trackBass, trackBassPatternA);
 
   //--PARTS-------------------
   //--ONE-------------------
@@ -103,25 +111,69 @@ function setup() {
   partFour = new p5.Part(64, 1 / 8);
   partFour.addPhrase(trackOnePhrase);
   partFour.addPhrase(trackTwoPhrase);
-  partFour.addPhrase(trackThreePhrase);
+  partFour.addPhrase(trackThreePhraseA);
   partFour.addPhrase(trackNoisePhrase);
 
   //--FIVE-------------------
   partFive = new p5.Part(64, 1 / 8);
   partFive.addPhrase(trackOnePhrase);
   partFive.addPhrase(trackTwoPhrase);
-  partFive.addPhrase(trackThreePhrase);
-  partFive.addPhrase(trackFourPhrase);
+  partFive.addPhrase(trackThreePhraseA);
   partFive.addPhrase(trackNoisePhrase);
+  partFive.addPhrase(trackBassPhrase);
 
   //--SIX-------------------
   partSix = new p5.Part(64, 1 / 8);
   partSix.addPhrase(trackOnePhrase);
   partSix.addPhrase(trackTwoPhrase);
-  partSix.addPhrase(trackThreePhrase);
-  partSix.addPhrase(trackFourPhrase);
+  partSix.addPhrase(trackThreePhraseA);
+  partSix.addPhrase(trackFourPhraseA);
   partSix.addPhrase(trackNoisePhrase);
   partSix.addPhrase(trackBassPhrase);
+
+  //--SEVEN-------------------
+  partSeven = new p5.Part(64, 1 / 8);
+  partSeven.addPhrase(trackOnePhrase);
+  partSeven.addPhrase(trackTwoPhrase);
+  partSeven.addPhrase(trackThreePhraseA);
+  partSeven.addPhrase(trackFourPhraseB);
+  partSeven.addPhrase(trackNoisePhrase);
+  partSeven.addPhrase(trackBassPhrase);
+
+  //--EIGHT-------------------
+  partEight = new p5.Part(64, 1 / 8);
+  partEight.addPhrase(trackOnePhrase);
+  partEight.addPhrase(trackTwoPhrase);
+  partEight.addPhrase(trackThreePhraseA);
+  partEight.addPhrase(trackFourPhraseA);
+  partEight.addPhrase(trackNoisePhrase);
+  partEight.addPhrase(trackBassPhrase);
+
+  //--NINE-------------------
+  partNine = new p5.Part(64, 1 / 8);
+  partNine.addPhrase(trackOnePhrase);
+  partNine.addPhrase(trackTwoPhrase);
+  partNine.addPhrase(trackThreePhraseA);
+  partNine.addPhrase(trackNoisePhrase);
+  partNine.addPhrase(trackBassPhrase);
+
+  //--TEN-------------------
+  partTen = new p5.Part(64, 1 / 8);
+  partTen.addPhrase(trackTwoPhrase);
+  partTen.addPhrase(trackThreePhraseA);
+  partTen.addPhrase(trackNoisePhrase);
+  partTen.addPhrase(trackBassPhrase);
+
+  //--ELEVEN-------------------
+  partEleven = new p5.Part(64, 1 / 8);
+  partEleven.addPhrase(trackThreePhraseA);
+  partEleven.addPhrase(trackNoisePhrase);
+  partEleven.addPhrase(trackBassPhrase);
+
+  //--TWELVE-------------------
+  partTwelve = new p5.Part(64, 1 / 8);
+  partTwelve.addPhrase(trackNoisePhrase);
+  partTwelve.addPhrase(trackBassPhrase);
 
   //--TESTING----------------
   partTest = new p5.Part(32, 1 / 8);
@@ -129,7 +181,7 @@ function setup() {
 
   //--SCORE-------------------------
   //--------------------------------
-  scoreOne = new p5.Score(partSix); //partTest // partOne, partTwo, partThree, partFour, partFive,
+  scoreOne = new p5.Score(partOne, partTwo, partThree, partFour, partFive, partSix, partSeven, partEight, partNine, partTen, partEleven, partTwelve); //partTest // partOne, partTwo, partThree, partFour, partFive, partSix, partSeven, partEight, partNine, partTen
   scoreOne.setBPM(60);
 
   //scoreOne.loop();
@@ -219,8 +271,8 @@ function setup() {
 
   //--VOICE 4 DIST-----------------------
   //--------------------------------
-  monoSynthDist = new p5.PolySynth();
-  //monoSynthDist.amp(0.6);
+  monoSynthDist = new p5.MonoSynth();
+  monoSynthDist.amp(0.9);
   monoSynthDist.setADSR(2, 1, 5, 1);
   //let attack = random(0.01, 0.09);
   //let decay = random(1, 3);
@@ -229,7 +281,7 @@ function setup() {
   voice4Gain = new p5.Gain();
   voice4Gain.connect();//connect to p5.sound
   voice4Gain.setInput(monoSynthDist);
-  voice4Gain.amp(0.4);
+  voice4Gain.amp(0.6);
   //--VOICE 4 --- DISTORTION ----
   voice4Dist = new p5.Distortion(0.10, '2x');
   voice4Gain.disconnect();//disconnect from voice 4 gain node
@@ -274,13 +326,13 @@ function setup() {
   vBassDist.process(voiceBassGain);
   vBassDist.amp(0.3);
   //--VOICE BASS REVERB ----
-  vBassDelay = new p5.Delay();
-  vBassDelay.setType("pingPong");
-  vBassDelay.process(voiceBassGain, 6 / 9, 0.6, 10000);
-  vBassDelay.amp(0.9);
+  // vBassDelay = new p5.Delay();
+  // vBassDelay.setType("pingPong");
+  // vBassDelay.process(voiceBassGain, 6 / 9, 0.6, 10000);
+  // vBassDelay.amp(0.9);
   //--VOICE BASS REVERB ----
   vBassReverb = new p5.Reverb();
-  vBassReverb.process(voiceBassGain, 15, 3, false);
+  vBassReverb.process(voiceBassGain, 3, 3, false);
   vBassReverb.amp(0.9);
 
   //PANNER
@@ -468,7 +520,13 @@ function trackBass(time) {
 
 function playScore() {
   userStartAudio();
-  if ((partOne.isPlaying) || (partTwo.isPlaying) || (partThree.isPlaying) || (partFour.isPlaying) || (partFive.isPlaying) || (partSix.isPlaying)) {
+  if ((partOne.isPlaying) ||
+      (partTwo.isPlaying) ||
+      (partThree.isPlaying) ||
+      (partFour.isPlaying) ||
+      (partFive.isPlaying) ||
+      (partSix.isPlaying)
+      ) {
     noLoop();
     scoreOne.pause();
     //scoreOne.stop();
