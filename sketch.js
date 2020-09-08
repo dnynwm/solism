@@ -136,7 +136,7 @@ function setup() {
   partSeven.addPhrase(trackOnePhrase);
   partSeven.addPhrase(trackTwoPhrase);
   partSeven.addPhrase(trackThreePhraseA);
-  partSeven.addPhrase(trackFourPhraseB);
+  partSeven.addPhrase(trackFourPhraseA);
   partSeven.addPhrase(trackNoisePhrase);
   partSeven.addPhrase(trackBassPhrase);
 
@@ -145,7 +145,7 @@ function setup() {
   partEight.addPhrase(trackOnePhrase);
   partEight.addPhrase(trackTwoPhrase);
   partEight.addPhrase(trackThreePhraseA);
-  partEight.addPhrase(trackFourPhraseA);
+  partEight.addPhrase(trackFourPhraseB);
   partEight.addPhrase(trackNoisePhrase);
   partEight.addPhrase(trackBassPhrase);
 
@@ -154,11 +154,13 @@ function setup() {
   partNine.addPhrase(trackOnePhrase);
   partNine.addPhrase(trackTwoPhrase);
   partNine.addPhrase(trackThreePhraseA);
+  partNine.addPhrase(trackFourPhraseA);
   partNine.addPhrase(trackNoisePhrase);
   partNine.addPhrase(trackBassPhrase);
 
   //--TEN-------------------
   partTen = new p5.Part(64, 1 / 8);
+  partTen.addPhrase(trackOnePhrase);
   partTen.addPhrase(trackTwoPhrase);
   partTen.addPhrase(trackThreePhraseA);
   partTen.addPhrase(trackNoisePhrase);
@@ -166,12 +168,14 @@ function setup() {
 
   //--ELEVEN-------------------
   partEleven = new p5.Part(64, 1 / 8);
+  partEleven.addPhrase(trackTwoPhrase);
   partEleven.addPhrase(trackThreePhraseA);
   partEleven.addPhrase(trackNoisePhrase);
   partEleven.addPhrase(trackBassPhrase);
 
   //--TWELVE-------------------
   partTwelve = new p5.Part(64, 1 / 8);
+  partTwelve.addPhrase(trackThreePhraseA);
   partTwelve.addPhrase(trackNoisePhrase);
   partTwelve.addPhrase(trackBassPhrase);
 
@@ -338,11 +342,11 @@ function setup() {
   noiseFilter.disconnect();//disconnect from noise filter
   noiseReverb.process(noiseFilter, 9, 8, false);
   noiseReverb.amp(0.5);
-    //--NOISE DELAY ----
-    noiseDelay = new p5.Delay();
-    noiseDelay.setType("pingPong");
-    noiseDelay.process(noiseReverb, 15 / 16, 0.6, 10000);
-    noiseDelay.amp(0.9);
+  //--NOISE DELAY ----
+  noiseDelay = new p5.Delay();
+  noiseDelay.setType("pingPong");
+  noiseDelay.process(noiseReverb, 15 / 16, 0.6, 10000);
+  noiseDelay.amp(0.9);
 
   //Stops Visuals at loading page
   noLoop();
@@ -425,17 +429,17 @@ function trackBass(time) {
 function playScore() {
   userStartAudio();
   if ((partOne.isPlaying) ||
-      (partTwo.isPlaying) ||
-      (partThree.isPlaying) ||
-      (partFour.isPlaying) ||
-      (partFive.isPlaying) ||
-      (partSix.isPlaying) ||
-      (partEight.isPlaying) ||
-      (partNine.isPlaying) ||
-      (partTen.isPlaying) ||
-      (partEleven.isPlaying) ||
-      (partTwelve.isPlaying)
-      ) {
+    (partTwo.isPlaying) ||
+    (partThree.isPlaying) ||
+    (partFour.isPlaying) ||
+    (partFive.isPlaying) ||
+    (partSix.isPlaying) ||
+    (partEight.isPlaying) ||
+    (partNine.isPlaying) ||
+    (partTen.isPlaying) ||
+    (partEleven.isPlaying) ||
+    (partTwelve.isPlaying)
+  ) {
     noLoop();
     scoreOne.pause();
     //scoreOne.stop();
