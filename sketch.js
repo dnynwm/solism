@@ -416,6 +416,7 @@ function playScore() {
     (partFour.isPlaying) ||
     (partFive.isPlaying) ||
     (partSix.isPlaying) ||
+    (partSeven.isPlaying) ||
     (partEight.isPlaying) ||
     (partNine.isPlaying) ||
     (partTen.isPlaying)
