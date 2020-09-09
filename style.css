@@ -9,7 +9,7 @@ canvas {
 .masthead {
   height: 100vh;
   min-height: 500px;
-  /*background-image: url('bg.png');https://source.unsplash.com/BtbjCFUvBXs/1920x1080*/
+  background-image: url('bg.png');/*https://source.unsplash.com/BtbjCFUvBXs/1920x1080*/
   background-color: #cccccc;
   background-size: cover;
   background-position: center;

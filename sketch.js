@@ -336,7 +336,7 @@ function setup() {
 //---------- CIRCLES --------
 function draw() {
   clear();
-  background(255, 255, 255);
+  background(30, 30, 30);
   //--------BREATHING-----------
   breathe();
   //--------CIRCLES-------------
