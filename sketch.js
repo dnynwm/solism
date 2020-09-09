@@ -337,6 +337,7 @@ function setup() {
 function draw() {
   clear();
   background(30, 30, 30);
+  if (circles.length > 100) circles.shift()
   //--------BREATHING-----------
   breathe();
   //--------CIRCLES-------------
@@ -386,6 +387,9 @@ function trackFour(time) {
   //let noteC = midiToFreq(randomNote);
   //let velocity = random(0.1, 0.9);
   //---VISUALS-----
+  // version 1:
+  // if (circles.length < 100) circles.push(new Circle());
+  // version 2:
   circles.push(new Circle());
   //monoSynthHigh.pan(-1, 4);
   monoSynthDist.play(noteA, 0.9, time);
