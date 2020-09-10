@@ -189,7 +189,7 @@ function setup() {
   // V1Dist.amp(0.3);
   //--VOICE 1 --- DELAY ----
   voice1Delay = new p5.Delay();
-  voice1Delay.setType("pingPong");
+  voice1Delay.setType();
   voice1Delay.process(voice1Gain, 15 / 16, 0.6, 3000);
   voice1Delay.amp(0.9);
   //--VOICE 2 REVERB ----
@@ -215,7 +215,7 @@ function setup() {
   voice2Gain.amp(0.7);
   //--VOICE 2 DELAY ----
   voice2Delay = new p5.Delay();
-  voice2Delay.setType("pingPong");
+  voice2Delay.setType();
   voice2Delay.process(voice2Gain, 15 / 16, 0.6, 3000);
   voice2Delay.amp(0.9);
   //--VOICE 2 REVERB ----
@@ -237,7 +237,7 @@ function setup() {
   voice3Gain.amp(0.7);
   //--VOICE 3 DELAY ----
   voice3Delay = new p5.Delay();
-  voice3Delay.setType("pingPong");
+  voice3Delay.setType();
   voice3Delay.process(voice3Gain, 15 / 16, 0.5, 3000);
   voice3Delay.amp(0.9);
   // //--VOICE 3 REVERSE REVERB ----
@@ -295,7 +295,7 @@ function setup() {
   vBassDist.amp(0.3);
   //--VOICE BASS REVERB ----
   // vBassDelay = new p5.Delay();
-  // vBassDelay.setType("pingPong");
+  // vBassDelay.setType();
   // vBassDelay.process(voiceBassGain, 6 / 9, 0.6, 10000);
   // vBassDelay.amp(0.9);
   //--VOICE BASS REVERB ----
@@ -326,7 +326,7 @@ function setup() {
   noiseReverb.amp(0.5);
   //--NOISE DELAY ----
   noiseDelay = new p5.Delay();
-  noiseDelay.setType("pingPong");
+  noiseDelay.setType();
   noiseDelay.process(noiseReverb, 15 / 16, 0.6, 10000);
   noiseDelay.amp(0.9);
 
