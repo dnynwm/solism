@@ -89,13 +89,14 @@ function setup() {
 
   //--PARTS-------------------
   //--ONE-------------------
-  partOne = new p5.Part(32, 1 / 8);
+  partOne = new p5.Part(16, 1 / 8);
+  partOne.addPhrase(trackTwoPhrase);
   partOne.addPhrase(trackNoisePhrase);
 
   //partOne.setBPM(60);
 
   //--TWO-------------------
-  partTwo = new p5.Part(32, 1 / 8);
+  partTwo = new p5.Part(16, 1 / 8);
   partTwo.addPhrase(trackTwoPhrase);
   partTwo.addPhrase(trackNoisePhrase);
 
@@ -167,7 +168,7 @@ function setup() {
 
   //--SCORE-------------------------
   //--------------------------------
-  scoreOne = new p5.Score(partOne, partTwo, partThree, partFour, partFive, partSix, partSeven, partEight, partNine, partTen);
+  scoreOne = new p5.Score(partOne, partTwo, partThree, partFour, partFive, partSix, partSeven, partEight, partNine, partTen)
   scoreOne.setBPM(60);
 
   //scoreOne.loop();
